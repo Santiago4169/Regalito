@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para Mi Novia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: black;
+      overflow: hidden;
+    }
+
+    #contenedor-imagen {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      max-width: 430px;
+      margin: 0 auto;
+      overflow: hidden;
+      background: black;
+    }
+
+    /* Fondo como imagen de fondo con CSS */
+    #contenedor-imagen::before {
+      content: "";
+      background-image: url(' fondo.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .phrase {
+      position: absolute;
+      white-space: nowrap;
+      font-size: 4vw;
+      max-font-size: 18px;
+      color: gold;
+      text-shadow: 1px 1px 3px black;
+      transform: scale(0);
+      animation: popOut 4s ease-out forwards;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .photo {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      object-fit: cover;
+      box-shadow: 0 0 8px white;
+      transform: scale(0);
+      animation: popOut 4s ease-out forwards;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    @keyframes popOut {
+      0% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0; transform: scale(2); }
+    }
+
+    #pantalla-inicial {
+      position: fixed;
+      z-index: 2000;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      max-width: 430px;
+      margin: 0 auto;
+      background: rgba(255, 192, 203, 0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #pantalla-inicial h1 {
+      font-size: 24px;
+      color: #80004f;
+      margin-bottom: 20px;
+      padding: 0 20px;
+    }
+
+    #btn-yoo {
+      padding: 12px 30px;
+      font-size: 18px;
+      background: deeppink;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 0 10px white;
+      cursor: pointer;
+    }
+
+    @media (min-width: 600px) {
+      .phrase {
+        font-size: 18px;
+      }
+
+      .photo {
+        width: 70px;
+        height: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla inicial -->
+  <div id="pantalla-inicial">
+    <h1>¿Quién es la nenita de papi? 💗</h1>
+    <button id="btn-yoo">¡Yooo!</button>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div id="contenedor-imagen">
+    <!-- Fondo aplicado vía CSS con ::before -->
+  </div>
+
+  <!-- Música -->
+  <audio id="musica" loop>
+    <source src="cancion.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
+
+  <script>
+    const phrases = [
+      "Feliz dia mi novia🧡😏","Te Amo 🧡", "Mi Preciosa 😍😳", "Mi Vida ❤️",
+      "Me Encantas 😍", "Mi Niña 🧡", "Amor de mi vida 💘🥰", "Feliz dia mi novia🧡😏",
+      "Mi Jennifer😘😏", "Te Amoooooo🧡", "Gracias por ser mi novia😊", "Mi nenita😊🥰", "Mi gordita🧡",
+      "mi negrita😍🥰", "Mi mundo🥺", "Gracias por Amarme🥰🥺", "Gracias por ser mi mujer🤭🥴", "mi Reyna🤗",
+      "Feliz dia mi novia🧡😏", "awwwwwww🫠😊", "Te Amooo🧡😊", "Amor de Papi🧡", "Quitece la tanguita🤭🥴",
+      "Te toca😘😏", "Te Amo🧡😏", "Tan Rica y Hermosa🥴🤤", "La mejor mujer del mundo🧡"
+    ];
+
+    const photos = [
+      '1.jpg',
+      '2.jpg',
+      '3.jpg',
+      '4.jpg',
+      '5.jpg', '6.jpg', '7.jpg', '9.jpg', '10.jpg', '11.jpg',
+      '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', 
+      '19.jpg', '20.jpg'
+    ];
+
+    const contenedor = document.getElementById("contenedor-imagen");
+
+    function createPhrase() {
+      const el = document.createElement("div");
+      el.className = "phrase";
+      el.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+
+      const x = Math.random() * (contenedor.clientWidth - 100);
+      const y = Math.random() * (contenedor.clientHeight - 40);
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+
+      el.style.color = ["gold", "deeppink", "aqua", "white", "violet"][Math.floor(Math.random() * 5)];
+
+      contenedor.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }
+
+    function createPhoto() {
+      const img = document.createElement("img");
+      img.className = "photo";
+      img.src = photos[Math.floor(Math.random() * photos.length)];
+
+      const x = Math.random() * (contenedor.clientWidth - 80);
+      const y = Math.random() * (contenedor.clientHeight - 80);
+      img.style.left = `${x}px`;
+      img.style.top = `${y}px`;
+
+      contenedor.appendChild(img);
+      setTimeout(() => img.remove(), 4000);
+    }
+
+    document.getElementById("btn-yoo").onclick = () => {
+      document.getElementById("pantalla-inicial").style.display = "none";
+      document.getElementById("musica").play();
+      setInterval(createPhrase, 1000);
+      setInterval(createPhoto, 2500);
+    };
+  </script>
+</body>
+</html>
